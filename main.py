@@ -43,7 +43,7 @@ class KaXTerminal:
         # Bind CTRL + R to a function
         self.root.bind("<Control-r>", self.refresh_terminal)
 
-        def refresh_terminal(self, event):
+    def refresh_terminal(self, event):
         # Implement the action to be performed on CTRL + R
         self.terminal_display.configure(state='normal')
         self.terminal_display.insert(tk.END, "\nRefreshing...\n")
