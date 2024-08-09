@@ -69,7 +69,7 @@ class KaXTerminal:
         elif command == "exit":
             self.root.quit()
         elif command == "version":
-            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0\n")
+            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0 - Bug Fixes 21:39 09.08.2024 (DE-Time)\n")
         elif command.startswith("document-create") or command.startswith("doc-create"):
             self.handle_document_create(command)
         elif command == "document-clear" or command == "doc-clear":
@@ -156,7 +156,7 @@ class KaXTerminal:
         self.terminal_display.insert(tk.END, f"Document created: {json.dumps(document, indent=2)}\n")
 
     def save_document(self, document):
-        file_path = os.path.join(self.base_dir, "database", "documents.json")
+        file_path = os.path.join(self.base_dir, "database/documents.json")
         try:
             if os.path.exists(file_path):
                 with open(file_path, "r") as file:
@@ -179,7 +179,7 @@ class KaXTerminal:
             self.terminal_display.configure(state='normal')
             self.terminal_display.insert(tk.END, f"\n$ {response}\n")
             if response == "yes":
-                file_path = os.path.join(self.base_dir, "database", "documents.json")
+                file_path = os.path.join(self.base_dir, "database/documents.json")
                 with open(file_path, "w") as file:
                     json.dump([], file)
                 self.terminal_display.insert(tk.END, "All documents have been cleared.\n")
@@ -195,7 +195,7 @@ class KaXTerminal:
         self.command_entry.bind("<Return>", on_confirm)
 
     def handle_document_read(self):
-        file_path = os.path.join(self.base_dir, "database", "documents.json")
+        file_path = os.path.join(self.base_dir, "database/documents.json")
         try:
             if os.path.exists(file_path):
                 with open(file_path, "r") as file:
@@ -211,16 +211,16 @@ class KaXTerminal:
 
     def restart_application(self, event):
         self.root.quit()
-        os.system(f'python "{os.path.join(self.base_dir, "assets", "messagebox", "restartMessageBox.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets/messagebox/restartMessageBox.py")}"')
 
     def open_settings(self):
-        os.system(f'python "{os.path.join(self.base_dir, "assets", "Interfaces", "settings", "settings.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/settings/settings.py")}"')
 
     def open_credits(self):
-        os.system(f'python "{os.path.join(self.base_dir, "assets", "Interfaces", "credits", "creditsGUI.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/credits/creditsGUI.py")}"')
 
     def open_ball_physics_game(self):
-        os.system(f'python "{os.path.join(self.base_dir, "assets", "Interfaces", "ballSimulationGame", "ballPhysGame.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/ballSimulationGame/ballPhysGame.py")}"')
 
 if __name__ == "__main__":
     root = tk.Tk()
