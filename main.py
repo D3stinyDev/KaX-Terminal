@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import scrolledtext
-from PIL import Image, ImageTk
 import json
 import os
+from PIL import Image, ImageTk
 import psutil
 
 class KaXTerminal:
@@ -15,12 +15,15 @@ class KaXTerminal:
         self.history_index = -1
         self.aliases = {}
 
+        # Determine the base directory where the script is located
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+
         # Create a frame for the terminal area
         self.frame = tk.Frame(root, bg="black")
         self.frame.pack(fill=tk.BOTH, expand=True)
 
         # Load and resize the logo
-        self.logo_path = "KaX Terminal/assets/KaX_Terminal_BlackBG_WhiteTxt.png"
+        self.logo_path = os.path.join(self.base_dir, "assets", "KaX_Terminal_BlackBG_WhiteTxt.png")
         self.load_and_resize_logo()
 
         # Create a scrolled text widget for the terminal display
@@ -61,40 +64,30 @@ class KaXTerminal:
         
         if command == "cls" or command == "clear":
             self.terminal_display.delete(1.0, tk.END)
-            print("Cleared the text on screen")
         elif command.startswith("echo "):
             self.terminal_display.insert(tk.END, command[5:] + "\n")
-            print("Echo successful")
         elif command == "exit":
             self.root.quit()
-            print("Program was closed with exit command")
         elif command == "version":
             self.terminal_display.insert(tk.END, "KaX Terminal Version 1.0\n")
-            print("Displayed the KaX Terminal version")
         elif command.startswith("document-create") or command.startswith("doc-create"):
             self.handle_document_create(command)
-            print("Created a document")
         elif command == "document-clear" or command == "doc-clear":
             self.handle_document_clear()
-            print("Cleared all locally stored documents")
         elif command == "document-read" or command == "doc-read":
             self.handle_document_read()
-            print("Displayed all local stored documents")
         elif command == "reload":
             self.restart_application(None)
-            print("Reload command initiated, starting the messagebox")
         elif command == "settings":
             self.open_settings()
-            print("Opened settings GUI")
         elif command == "credits":
             self.open_credits()
-            print("Opened credits GUI")
         elif command == "resources":
             self.show_resources()
-            print("Displayed system resource usage")
+        elif command == "ballPhysicsGame":
+            self.open_ball_physics_game()
         elif command.startswith("alias "):
             self.set_alias(command)
-            print("Alias set successfully")
         else:
             self.terminal_display.insert(tk.END, f"Command '{command}' not found.\n")
         
@@ -163,7 +156,7 @@ class KaXTerminal:
         self.terminal_display.insert(tk.END, f"Document created: {json.dumps(document, indent=2)}\n")
 
     def save_document(self, document):
-        file_path = "KaX Terminal/database/documents.json"
+        file_path = os.path.join(self.base_dir, "database", "documents.json")
         try:
             if os.path.exists(file_path):
                 with open(file_path, "r") as file:
@@ -186,7 +179,7 @@ class KaXTerminal:
             self.terminal_display.configure(state='normal')
             self.terminal_display.insert(tk.END, f"\n$ {response}\n")
             if response == "yes":
-                file_path = "KaX Terminal/database/documents.json"
+                file_path = os.path.join(self.base_dir, "database", "documents.json")
                 with open(file_path, "w") as file:
                     json.dump([], file)
                 self.terminal_display.insert(tk.END, "All documents have been cleared.\n")
@@ -202,7 +195,7 @@ class KaXTerminal:
         self.command_entry.bind("<Return>", on_confirm)
 
     def handle_document_read(self):
-        file_path = "KaX Terminal/database/documents.json"
+        file_path = os.path.join(self.base_dir, "database", "documents.json")
         try:
             if os.path.exists(file_path):
                 with open(file_path, "r") as file:
@@ -218,13 +211,16 @@ class KaXTerminal:
 
     def restart_application(self, event):
         self.root.quit()
-        os.system(f'python "{os.path.join("KaX Terminal", "assets", "messagebox", "restartMessageBox.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets", "messagebox", "restartMessageBox.py")}"')
 
     def open_settings(self):
-        os.system(f'python "{os.path.join("KaX Terminal/assets/Interfaces/settings/settings.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets", "Interfaces", "settings", "settings.py")}"')
 
     def open_credits(self):
-        os.system(f'python "{os.path.join("KaX Terminal", "assets", "Interfaces", "credits", "creditsGUI.py")}"')
+        os.system(f'python "{os.path.join(self.base_dir, "assets", "Interfaces", "credits", "creditsGUI.py")}"')
+
+    def open_ball_physics_game(self):
+        os.system(f'python "{os.path.join(self.base_dir, "assets", "Interfaces", "ballSimulationGame", "ballPhysGame.py")}"')
 
 if __name__ == "__main__":
     root = tk.Tk()

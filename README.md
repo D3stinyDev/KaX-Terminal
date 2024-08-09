@@ -20,6 +20,7 @@
 | credits | Opens the credits as an Interface | None |
 | alias | set aliases for commands | Command that gets the alias |
 | resources | Show the system resources | None |
+| ballPhysicsGame | Play a physics game with a ball | None |
 
 # Shortcut List
 | Shortcut | Description |
