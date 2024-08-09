@@ -69,7 +69,7 @@ class KaXTerminal:
         elif command == "exit":
             self.root.quit()
         elif command == "version":
-            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.0\n")
+            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0\n")
         elif command.startswith("document-create") or command.startswith("doc-create"):
             self.handle_document_create(command)
         elif command == "document-clear" or command == "doc-clear":
