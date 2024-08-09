@@ -40,6 +40,16 @@ class KaXTerminal:
         self.command_entry.bind("<Up>", self.previous_command)
         self.command_entry.bind("<Down>", self.next_command)
 
+        # Bind CTRL + R to a function
+        self.root.bind("<Control-r>", self.refresh_terminal)
+
+        def refresh_terminal(self, event):
+        # Implement the action to be performed on CTRL + R
+        self.terminal_display.configure(state='normal')
+        self.terminal_display.insert(tk.END, "\nRefreshing...\n")
+        self.terminal_display.configure(state='disabled')
+        self.terminal_display.see(tk.END)
+
     def load_and_resize_logo(self):
         image = Image.open(self.logo_path)
         image = image.resize((100, 50), Image.Resampling.LANCZOS)  # Adjust size as needed
