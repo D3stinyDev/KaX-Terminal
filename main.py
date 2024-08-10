@@ -79,7 +79,7 @@ class KaXTerminal:
         elif command == "exit":
             self.root.quit()
         elif command == "version":
-            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0 - Bug Fixes 21:39 09.08.2024 (DE-Time)\n")
+            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0 - Notepad added, alias command temporarily disabled 10.08.2024 21:45 (DE-Time)\n")
         elif command.startswith("document-create") or command.startswith("doc-create"):
             self.handle_document_create(command)
         elif command == "document-clear" or command == "doc-clear":
@@ -96,6 +96,8 @@ class KaXTerminal:
             self.show_resources()
         elif command == "ballPhysicsGame":
             self.open_ball_physics_game()
+        elif command == "notepad" or command == "ntpd":
+            self.open_notepad()
         elif command.startswith("alias "):
             self.set_alias(command)
         else:
@@ -106,6 +108,9 @@ class KaXTerminal:
 
         self.terminal_display.configure(state='disabled')
         self.command_entry.delete(0, tk.END)
+
+    def open_notepad(self):
+        os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/notepad/notepad.py")}"')
 
     def previous_command(self, event):
         if self.command_history:

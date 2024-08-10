@@ -18,9 +18,9 @@
 | reload | Reloads the terminal | None |
 | settings | Opens the settings Interface | None |
 | credits | Opens the credits as an Interface | None |
-| alias | set aliases for commands | Command that gets the alias |
 | resources | Show the system resources | None |
 | ballPhysicsGame | Play a physics game with a ball | None |
+| notepad, ntpd | Open up a notepad to write, save and load text files | None |
 
 # Shortcut List
 | Shortcut | Description |
