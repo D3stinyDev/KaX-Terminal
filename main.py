@@ -99,7 +99,8 @@ class KaXTerminal:
         elif command == "notepad" or command == "ntpd":
             self.open_notepad()
         elif command.startswith("alias "):
-            self.set_alias(command)
+            # self.set_alias(command)
+            print("The alias command is currently not working, it was disabled by the developers.")
         else:
             self.terminal_display.insert(tk.END, f"Command '{command}' not found.\n")
         
