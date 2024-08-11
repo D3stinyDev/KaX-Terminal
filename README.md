@@ -1,3 +1,4 @@
+![logo](assets/KaX_Terminal_Logo_Transparent.png)
 [![Reddit](https://img.shields.io/badge/Reddit-Join%20Us-orange?logo=reddit
 )](https://www.reddit.com/r/KaX_Terminal/)
 [![GitHub](https://img.shields.io/badge/GitHub-View%20Repo-blue?logo=github
