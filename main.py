@@ -4,16 +4,17 @@ import json
 import os
 from PIL import Image, ImageTk
 import psutil
+import random
+from datetime import datetime
 
 class KaXTerminal:
     def __init__(self, root):
         self.root = root
         self.root.title("KaX Terminal")
 
-        # Initialize command history, history index, and aliases
+        # Initialize command history and history index
         self.command_history = []
         self.history_index = -1
-        self.aliases = {}
 
         # Determine the base directory where the script is located
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -60,10 +61,6 @@ class KaXTerminal:
     def execute_command(self, event):
         command = self.command_entry.get().strip()
 
-        # Check if the command is an alias
-        if command in self.aliases:
-            command = self.aliases[command]
-
         # Store the command in history if it's not empty and not a duplicate of the last command
         if command and (not self.command_history or self.command_history[-1] != command):
             self.command_history.append(command)
@@ -79,28 +76,19 @@ class KaXTerminal:
         elif command == "exit":
             self.root.quit()
         elif command == "version":
-            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0 - Notepad added, alias command temporarily disabled 10.08.2024 21:45 (DE-Time)\n")
-        elif command.startswith("document-create") or command.startswith("doc-create"):
-            self.handle_document_create(command)
-        elif command == "document-clear" or command == "doc-clear":
-            self.handle_document_clear()
-        elif command == "document-read" or command == "doc-read":
-            self.handle_document_read()
-        elif command == "reload":
-            self.restart_application(None)
-        elif command == "settings":
-            self.open_settings()
-        elif command == "credits":
-            self.open_credits()
+            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0 - Updated with fun commands and customization\n")
+        elif command == "crashTerminal":
+            self.crash_terminal()
+        elif command == "showTimestamp" or command == "showTms":
+            self.show_timestamp()
+        elif command.startswith("setColor "):
+            self.set_color(command)
         elif command == "resources":
             self.show_resources()
         elif command == "ballPhysicsGame":
             self.open_ball_physics_game()
         elif command == "notepad" or command == "ntpd":
             self.open_notepad()
-        elif command.startswith("alias "):
-            # self.set_alias(command)
-            print("The alias command is currently not working, it was disabled by the developers.")
         else:
             self.terminal_display.insert(tk.END, f"Command '{command}' not found.\n")
         
@@ -109,6 +97,32 @@ class KaXTerminal:
 
         self.terminal_display.configure(state='disabled')
         self.command_entry.delete(0, tk.END)
+
+    def crash_terminal(self):
+        self.terminal_display.insert(tk.END, "Simulating terminal crash... Just kidding! 😄\n")
+        fun_messages = [
+            "Blue Screen of Death Incoming!",
+            "Segmentation fault. Core dumped. Or not.",
+            "Oops, something went wrong... oh wait, just kidding!",
+            "Exploding in 3... 2... 1... 💥"
+        ]
+        self.terminal_display.insert(tk.END, random.choice(fun_messages) + "\n")
+
+    def show_timestamp(self):
+        now = datetime.now()
+        timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+        self.terminal_display.insert(tk.END, f"Current Timestamp: {timestamp}\n")
+
+    def set_color(self, command):
+        parts = command.split()
+        if len(parts) == 3:
+            bg_color = parts[1]
+            fg_color = parts[2]
+            self.terminal_display.configure(bg=bg_color, fg=fg_color)
+            self.command_entry.configure(bg=bg_color, fg=fg_color, insertbackground=fg_color)
+            self.terminal_display.insert(tk.END, f"Terminal colors updated. Background: {bg_color}, Text: {fg_color}\n")
+        else:
+            self.terminal_display.insert(tk.END, "Usage: setColor <bg_color> <fg_color>\nExample: setColor black green\n")
 
     def open_notepad(self):
         os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/notepad/notepad.py")}"')
@@ -138,102 +152,6 @@ class KaXTerminal:
         self.terminal_display.insert(tk.END, f"CPU Usage: {cpu_usage}%\n")
         self.terminal_display.insert(tk.END, f"Memory Usage: {memory_info.percent}%\n")
         self.terminal_display.configure(state='disabled')
-
-    def set_alias(self, command):
-        parts = command.split(maxsplit=2)
-        if len(parts) < 3:
-            self.terminal_display.insert(tk.END, "Usage: alias <name> <command>\n")
-            return
-        alias_name, alias_command = parts[1], parts[2]
-        self.aliases[alias_name] = alias_command
-        self.terminal_display.insert(tk.END, f"Alias '{alias_name}' set for command '{alias_command}'\n")
-
-    def handle_document_create(self, command):
-        parts = command.split()
-        title = ""
-        description = ""
-        message = ""
-        for i in range(1, len(parts)):
-            if parts[i] == "-title" and i + 1 < len(parts):
-                title = parts[i + 1]
-            elif parts[i] == "-description" and i + 1 < len(parts):
-                description = parts[i + 1]
-            elif parts[i] == "-message" and i + 1 < len(parts):
-                message = parts[i + 1]
-        
-        document = {
-            "title": title,
-            "description": description,
-            "message": message.replace('\\n', '\n').replace('/n', '\n')
-        }
-
-        self.save_document(document)
-
-        self.terminal_display.insert(tk.END, f"Document created: {json.dumps(document, indent=2)}\n")
-
-    def save_document(self, document):
-        file_path = os.path.join(self.base_dir, "database/documents.json")
-        try:
-            if os.path.exists(file_path):
-                with open(file_path, "r") as file:
-                    data = json.load(file)
-            else:
-                data = []
-        except json.JSONDecodeError:
-            data = []
-
-        data.append(document)
-
-        with open(file_path, "w") as file:
-            json.dump(data, file, indent=2)
-
-    def handle_document_clear(self):
-        self.terminal_display.insert(tk.END, "Are you sure you want to clear all documents? Type 'yes' to confirm: ")
-
-        def on_confirm(event):
-            response = self.command_entry.get().strip().lower()
-            self.terminal_display.configure(state='normal')
-            self.terminal_display.insert(tk.END, f"\n$ {response}\n")
-            if response == "yes":
-                file_path = os.path.join(self.base_dir, "database/documents.json")
-                with open(file_path, "w") as file:
-                    json.dump([], file)
-                self.terminal_display.insert(tk.END, "All documents have been cleared.\n")
-            else:
-                self.terminal_display.insert(tk.END, "Document clear command cancelled.\n")
-            
-            self.command_entry.unbind("<Return>")
-            self.command_entry.bind("<Return>", self.execute_command)
-            self.command_entry.delete(0, tk.END)
-            self.terminal_display.configure(state='disabled')
-
-        self.command_entry.unbind("<Return>")
-        self.command_entry.bind("<Return>", on_confirm)
-
-    def handle_document_read(self):
-        file_path = os.path.join(self.base_dir, "database/documents.json")
-        try:
-            if os.path.exists(file_path):
-                with open(file_path, "r") as file:
-                    data = json.load(file)
-                    if data:
-                        self.terminal_display.insert(tk.END, f"Documents:\n{json.dumps(data, indent=2)}\n")
-                    else:
-                        self.terminal_display.insert(tk.END, "No documents found.\n")
-            else:
-                self.terminal_display.insert(tk.END, "No documents found.\n")
-        except json.JSONDecodeError:
-            self.terminal_display.insert(tk.END, "Error reading documents.\n")
-
-    def restart_application(self, event):
-        self.root.quit()
-        os.system(f'python "{os.path.join(self.base_dir, "assets/messagebox/restartMessageBox.py")}"')
-
-    def open_settings(self):
-        os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/settings/settings.py")}"')
-
-    def open_credits(self):
-        os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/credits/creditsGUI.py")}"')
 
     def open_ball_physics_game(self):
         os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/ballSimulationGame/ballPhysGame.py")}"')
