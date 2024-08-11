@@ -76,7 +76,7 @@ class KaXTerminal:
         elif command == "exit":
             self.root.quit()
         elif command == "version":
-            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.1.0 - Updated with fun commands and customization\n")
+            self.terminal_display.insert(tk.END, "KaX Terminal Version 1.2.0\n")
         elif command == "crashTerminal":
             self.crash_terminal()
         elif command == "showTimestamp" or command == "showTms":

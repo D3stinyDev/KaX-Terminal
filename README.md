@@ -1,4 +1,10 @@
+[![Reddit](https://img.shields.io/badge/Reddit-Join%20Us-orange?logo=reddit
+)](https://www.reddit.com/r/KaX_Terminal/)
+[![GitHub](https://img.shields.io/badge/GitHub-View%20Repo-blue?logo=github
+)](https://github.com/D3stinyDev/KaX-Terminal)
+
 # About
+
 **KaX Terminal** is an terminal that is based on **Kali Linux** and **Windows Terminal**. This program should be used as another way to create simple files or other data.
 
 # Command List
@@ -23,6 +29,7 @@
 | notepad, ntpd | Open up a notepad to write, save and load text files | None |
 
 # Shortcut List
+
 | Shortcut | Description |
 | ----------- | ----------- |
 | CTRL + R | Reloads the terminal | 
@@ -30,6 +37,7 @@
 | ArrowDown | Previous used command | 
 
 # Credits
+
 | Name | Rank | Social Media |
 | ----------- | ----------- | ----------- |
 | D3stinyDev | Founder | Discord: d3stinydev |
