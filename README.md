@@ -22,7 +22,6 @@
 | echo | repeat a message by your input | None |
 | exit | Close the program | None |
 | reload | Reloads the terminal | None |
-| settings | Opens the settings Interface | None |
 | credits | Opens the credits as an Interface | None |
 | resources | Show the system resources | None |
 | ballPhysicsGame | Play a physics game with a ball | None |
