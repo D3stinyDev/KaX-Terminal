@@ -27,6 +27,7 @@
 | resources | Show the system resources | None |
 | ballPhysicsGame | Play a physics game with a ball | None |
 | notepad, ntpd | Open up a notepad to write, save and load text files | None |
+| countdown | Countdown in seconds minutes and hours | s, m, h |
 
 # Shortcut List
 

@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 import psutil
 import random
 from datetime import datetime
+import time
 
 class KaXTerminal:
     def __init__(self, root):
@@ -83,6 +84,8 @@ class KaXTerminal:
             self.show_timestamp()
         elif command.startswith("setColor "):
             self.set_color(command)
+        elif command.startswith("countdown "):
+            self.countdown(command)
         elif command == "resources":
             self.show_resources()
         elif command == "ballPhysicsGame":
@@ -123,6 +126,41 @@ class KaXTerminal:
             self.terminal_display.insert(tk.END, f"Terminal colors updated. Background: {bg_color}, Text: {fg_color}\n")
         else:
             self.terminal_display.insert(tk.END, "Usage: setColor <bg_color> <fg_color>\nExample: setColor black green\n")
+
+    def countdown(self, command):
+        try:
+            # Extract time value and unit (s, m, h)
+            parts = command.split()
+            if len(parts) != 2:
+                self.terminal_display.insert(tk.END, "Usage: countdown <time>\nExamples: countdown 20s, countdown 1m, countdown 1h\n")
+                return
+
+            time_value = int(parts[1][:-1])
+            time_unit = parts[1][-1]
+
+            # Convert to seconds based on the unit
+            if time_unit == 's':
+                total_seconds = time_value
+            elif time_unit == 'm':
+                total_seconds = time_value * 60
+            elif time_unit == 'h':
+                total_seconds = time_value * 3600
+            else:
+                self.terminal_display.insert(tk.END, "Invalid time unit. Use 's' for seconds, 'm' for minutes, or 'h' for hours.\n")
+                return
+
+            # Start the countdown
+            while total_seconds > 0:
+                mins, secs = divmod(total_seconds, 60)
+                time_format = f'{mins:02}:{secs:02}'
+                self.terminal_display.insert(tk.END, f"\rCountdown: {time_format}\n")
+                self.terminal_display.update()
+                time.sleep(1)
+                total_seconds -= 1
+
+            self.terminal_display.insert(tk.END, "Time's up!\n")
+        except Exception as e:
+            self.terminal_display.insert(tk.END, f"Error: {e}\n")
 
     def open_notepad(self):
         os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/notepad/notepad.py")}"')
