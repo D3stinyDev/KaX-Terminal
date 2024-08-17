@@ -1,7 +1,6 @@
-[![Reddit](https://img.shields.io/badge/Reddit-Join%20Us-orange?logo=reddit
-)](https://www.reddit.com/r/KaX_Terminal/)
-[![GitHub](https://img.shields.io/badge/GitHub-View%20Repo-blue?logo=github
-)](https://github.com/D3stinyDev/KaX-Terminal)
+[![Reddit](https://img.shields.io/badge/Reddit-Join%20Us-orange?style=for-the-badge&logo=reddit)](https://www.reddit.com/)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github)](https://github.com/D3stinyDev/KaX-Terminal)
+[![GitHub Wiki](https://img.shields.io/badge/GitHub-Wiki-181717?style=for-the-badge&logo=github)](https://github.com/D3stinyDev/KaX-Terminal/wiki/Getting-Started)
 
 # About
 
