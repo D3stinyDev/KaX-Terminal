@@ -37,6 +37,21 @@
 | ArrowUp | Previous used command | 
 | ArrowDown | Previous used command | 
 
+# How to install Modules
+#### Official Modules
+1. Go to the official KaX Terminal Module repository, type in this link `https://github.com/D3stinyDev/KaX-Terminal-Modules/tree/main`
+2. Download one of the modules you like
+3. Drag and drop the module file in the folder: `config/modules`
+4. Start KaX Terminal
+**[!]**: If one of the official modules are not working, report it in the GitHub Repository Discussions.
+
+#### Unofficial Modules
+1. Download the module you like from the source where the unofficial module is
+2. Check the code inside of the module, to look if there is any malware or harmful code in it.
+3. Drag and drop the unoffical module file in the folder: `config/modules`
+4. Start KaX Terminal
+**[!]**: We are not responsible for any harm cuased by the unofficial modules, you are responsible for what you are doing, always look inside the code and look if there is harmful code.
+
 # Credits
 
 | Name | Rank | Social Media |
