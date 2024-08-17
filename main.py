@@ -7,6 +7,8 @@ import psutil
 import random
 from datetime import datetime
 import time
+import importlib.util
+import sys
 
 class KaXTerminal:
     def __init__(self, root):
@@ -44,6 +46,34 @@ class KaXTerminal:
 
         # Bind CTRL + R to a function
         self.root.bind("<Control-r>", self.refresh_terminal)
+
+        # Load modules after terminal has been fully initialized
+        self.load_modules()
+
+    def load_modules(self):
+        modules_dir = os.path.join(self.base_dir, "config", "modules")
+        if not os.path.exists(modules_dir):
+            return  # If no modules directory exists, do nothing
+
+        for filename in os.listdir(modules_dir):
+            if filename.endswith(".py"):  # Load only Python files
+                module_path = os.path.join(modules_dir, filename)
+                module_name = filename[:-3]  # Strip the .py extension
+
+                # Dynamically load the module
+                spec = importlib.util.spec_from_file_location(module_name, module_path)
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[module_name] = module
+                spec.loader.exec_module(module)
+
+                # Check if the module has a `modify_terminal` function and call it
+                if hasattr(module, "modify_terminal"):
+                    try:
+                        module.modify_terminal(self)
+                    except Exception as e:
+                        self.terminal_display.configure(state='normal')
+                        self.terminal_display.insert(tk.END, f"Error while loading module '{module_name}': {e}\n")
+                        self.terminal_display.configure(state='disabled')
 
     def refresh_terminal(self, event):
         # Implement the action to be performed on CTRL + R
@@ -160,7 +190,7 @@ class KaXTerminal:
 
             self.terminal_display.insert(tk.END, "Time's up!\n")
         except Exception as e:
-            self.terminal_display.insert(tk.END, f"Error: {e}\n")
+            self.terminal_display.insert(tk.END, f"Error during countdown: {e}\n")
 
     def open_notepad(self):
         os.system(f'python "{os.path.join(self.base_dir, "assets/Interfaces/notepad/notepad.py")}"')

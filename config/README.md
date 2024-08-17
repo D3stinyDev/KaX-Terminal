@@ -1,0 +1,2 @@
+### Warning!
+If you edit, add or delete anything it this folder you will need to know that KaX Terminal may not properly run or jsut crash. If you have any saved documents, just do not edit anything without knowing what you are doing, we are not responsible for anything!
