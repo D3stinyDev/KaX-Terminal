@@ -1,0 +1,4 @@
+CustomTkinter
+Pillow
+psutil
+json5
